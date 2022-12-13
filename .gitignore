@@ -3,3 +3,9 @@
 backend/node_modules
 backend/logs
 backend/.env
+
+# Frontend -----------------
+frontend/node_modules
+
+# Misc -----------------
+.DS_Store
