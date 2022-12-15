@@ -7,7 +7,7 @@ const User = require('../models/User');
 // @route GET /notes
 // @access Private
 const getAllNotes = asyncHandler(async (req, res) => {
-  const notes = await Note.find();
+  const notes = await Note.find().lean();
 
   if (!notes.length) {
     return res.status(400).json({ message: 'No note found' });
