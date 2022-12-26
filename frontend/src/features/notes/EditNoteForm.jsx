@@ -37,7 +37,7 @@ const EditNoteForm = ({ note, users }) => {
   const onCompletedChanged = e => setCompleted(prevState => !prevState);
   const onUserIdChanged = e => setUserId(e.target.value);
 
-  const canSave = [title, text, completed, userId].every(Boolean) && !isLoading;
+  const canSave = [title, text, userId].every(Boolean) && !isLoading;
 
   const onSaveNoteClicked = async () => {
     if (canSave) {
