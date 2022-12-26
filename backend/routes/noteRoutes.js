@@ -1,5 +1,6 @@
 const express = require('express');
 
+const verifyJWT = require('../middleware/verifyJWT');
 const {
   getAllNotes,
   createNewNote,
@@ -8,6 +9,8 @@ const {
 } = require('../controllers/notesController');
 
 const router = express.Router();
+
+router.use(verifyJWT);
 
 router
   .route('/')
