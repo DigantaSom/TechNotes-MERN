@@ -15,7 +15,7 @@ export const notesApiSlice = apiSlice.injectEndpoints({
       query: () => '/notes',
       validateStatus: (response, result) =>
         response.status === 200 && !result.isError,
-      keepUnusedDataFor: 5, // in production, it should be left to default (60s)
+      // keepUnusedDataFor: 5, // in production, it should be left to default (60s)
       transformResponse: responseData => {
         const loadedNotes = responseData.map(note => {
           note.id = note._id;
@@ -35,10 +35,42 @@ export const notesApiSlice = apiSlice.injectEndpoints({
         }
       },
     }),
+    addNewNote: builder.mutation({
+      query: initialNote => ({
+        url: '/notes',
+        method: 'POST',
+        body: { ...initialNote },
+      }),
+      // forcing to invalidate the Note list in the cache
+      invalidatesTags: [{ type: 'Note', id: 'LIST' }],
+    }),
+    updateNote: builder.mutation({
+      query: initialNote => ({
+        url: '/notes',
+        method: 'PATCH',
+        body: { ...initialNote },
+      }),
+      // invalidating only the updated Note object in the cache
+      invalidatesTags: (result, error, arg) => [{ type: 'Note', id: arg.id }],
+    }),
+    deleteNote: builder.mutation({
+      query: ({ id }) => ({
+        url: '/notes',
+        method: 'DELETE',
+        body: { id },
+      }),
+      // invalidating only the deleted Note object in the cache
+      invalidatesTags: (result, error, arg) => [{ type: 'Note', id: arg.id }],
+    }),
   }),
 });
 
-export const { useGetNotesQuery } = notesApiSlice;
+export const {
+  useGetNotesQuery,
+  useAddNewNoteMutation,
+  useUpdateNoteMutation,
+  useDeleteNoteMutation,
+} = notesApiSlice;
 
 // returns the query result object
 export const selectNotesResult = notesApiSlice.endpoints.getNotes.select();
