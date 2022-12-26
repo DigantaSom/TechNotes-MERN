@@ -9,7 +9,7 @@ const User = require('../models/User');
 const getAllNotes = asyncHandler(async (req, res) => {
   const notes = await Note.find().lean();
 
-  if (!notes.length) {
+  if (!notes?.length) {
     return res.status(400).json({ message: 'No note found' });
   }
 
@@ -17,7 +17,7 @@ const getAllNotes = asyncHandler(async (req, res) => {
   const notesWithUser = await Promise.all(
     notes.map(async note => {
       const user = await User.findById(note.user).lean().exec();
-      return { ...note, username: user.username };
+      return { ...note, username: user?.username };
     })
   );
 
