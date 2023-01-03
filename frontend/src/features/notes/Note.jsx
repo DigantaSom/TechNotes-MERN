@@ -1,13 +1,20 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
-import { selectNoteById } from './notesApiSlice';
+import { useGetNotesQuery } from './notesApiSlice';
 
 const Note = ({ noteId }) => {
-  const note = useSelector(state => selectNoteById(state, noteId));
+  // const note = useSelector(state => selectNoteById(state, noteId));
+
+  // it's getting the data from the already queried data, not refetching from the server
+  const { note } = useGetNotesQuery('notesList', {
+    selectFromResult: ({ data }) => ({
+      note: data?.entities[noteId],
+    }),
+  });
 
   const navigate = useNavigate();
 
@@ -49,4 +56,7 @@ const Note = ({ noteId }) => {
   }
 };
 
-export default Note;
+// this component will only re-render when there are changes in the data of only this component
+const memoizedNote = memo(Note);
+
+export default memoizedNote;

@@ -12,9 +12,11 @@ const initialState = notesAdapter.getInitialState();
 export const notesApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getNotes: builder.query({
-      query: () => '/notes',
-      validateStatus: (response, result) =>
-        response.status === 200 && !result.isError,
+      query: () => ({
+        url: '/notes',
+        validateStatus: (response, result) =>
+          response.status === 200 && !result.isError,
+      }),
       // keepUnusedDataFor: 5, // in production, it should be left to default (60s)
       transformResponse: responseData => {
         const loadedNotes = responseData.map(note => {

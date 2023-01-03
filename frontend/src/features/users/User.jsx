@@ -1,13 +1,20 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 
-import { selectUserById } from './usersApiSlice';
+import { useGetUsersQuery } from './usersApiSlice';
 
 const User = ({ userId }) => {
-  const user = useSelector(state => selectUserById(state, userId));
+  // const user = useSelector(state => selectUserById(state, userId));
+
+  // it's getting the data from the already queried data, not refetching from the server
+  const { user } = useGetUsersQuery('usersList', {
+    selectFromResult: ({ data }) => ({
+      user: data?.entities[userId],
+    }),
+  });
 
   const navigate = useNavigate();
 
@@ -34,4 +41,7 @@ const User = ({ userId }) => {
   }
 };
 
-export default User;
+// this component will only re-render when there are changes in the data of only this component
+const memoizedUser = memo(User);
+
+export default memoizedUser;

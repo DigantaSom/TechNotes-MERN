@@ -9,9 +9,11 @@ const initialState = usersAdapter.getInitialState();
 export const usersApiSlice = apiSlice.injectEndpoints({
   endpoints: builder => ({
     getUsers: builder.query({
-      query: () => '/users',
-      validateStatus: (response, result) =>
-        response.status === 200 && !result.isError,
+      query: () => ({
+        url: '/users',
+        validateStatus: (response, result) =>
+          response.status === 200 && !result.isError,
+      }),
       // keepUnusedDataFor: 5, // in production, it should be left to default (60s)
       transformResponse: responseData => {
         const loadedUsers = responseData.map(user => {

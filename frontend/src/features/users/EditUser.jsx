@@ -1,19 +1,26 @@
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import PulseLoader from 'react-spinners/PulseLoader';
 
-import { selectUserById } from './usersApiSlice';
+import { useGetUsersQuery } from './usersApiSlice';
 
 import EditUserForm from './EditUserForm';
 
 const EditUser = () => {
   const { id } = useParams();
 
-  // subscribed user data (Prefetch.jsx)
-  const user = useSelector(state => selectUserById(state, id));
+  // // subscribed user data (Prefetch.jsx)
+  // const user = useSelector(state => selectUserById(state, id));
 
-  const content = user ? <EditUserForm user={user} /> : <p>Loading...</p>;
+  const { user } = useGetUsersQuery('usersList', {
+    selectFromResult: ({ data }) => ({
+      user: data?.entities[id],
+    }),
+  });
 
-  return content;
+  if (!user) {
+    return <PulseLoader color='#FFF' />;
+  }
+  return <EditUserForm user={user} />;
 };
 
 export default EditUser;
