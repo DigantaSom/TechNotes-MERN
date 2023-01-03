@@ -9,7 +9,8 @@ const errorHandler = (err, req, res, next) => {
 
   const status = res.statusCode ? res.statusCode : 500;
 
-  res.status(status).json({ message: err.message });
+  // isError is for RTKQuery in the frontend to handle any unexpected error
+  res.status(status).json({ message: err.message, isError: true });
 };
 
 module.exports = errorHandler;
