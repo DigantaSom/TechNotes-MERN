@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+import PulseLoader from 'react-spinners/PulseLoader';
 
 import usePersist from '../../hooks/usePersist';
 import { setCredentials } from './authSlice';
@@ -58,7 +59,7 @@ const Login = () => {
   let content;
 
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = <PulseLoader color='#FFF' />;
   } else {
     content = (
       <section className='public'>

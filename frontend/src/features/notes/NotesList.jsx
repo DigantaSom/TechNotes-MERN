@@ -1,3 +1,5 @@
+import PulseLoader from 'react-spinners/PulseLoader';
+
 import useAuth from '../../hooks/useAuth';
 import { useGetNotesQuery } from './notesApiSlice';
 
@@ -21,7 +23,7 @@ const NotesList = () => {
   let content;
 
   if (isLoading) {
-    content = <p>Loading...</p>;
+    content = <PulseLoader color='#FFF' />;
   }
 
   if (isError) {
