@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
 import PulseLoader from 'react-spinners/PulseLoader';
 
+import useTitle from '../../hooks/useTitle';
 import useAuth from '../../hooks/useAuth';
 import { useGetNotesQuery } from './notesApiSlice';
 import { useGetUsersQuery } from '../users/usersApiSlice';
@@ -8,6 +9,8 @@ import { useGetUsersQuery } from '../users/usersApiSlice';
 import EditNoteForm from './EditNoteForm';
 
 const EditNote = () => {
+  useTitle('techNotes: Edit Note');
+
   const { id } = useParams();
 
   // new request gets made, unlike the below way

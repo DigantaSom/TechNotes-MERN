@@ -1,5 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 
+import useTitle from './hooks/useTitle';
+import { ROLES } from './config/roles';
+
 import Layout from './components/Layout';
 import Public from './components/Public';
 import Login from './features/auth/Login';
@@ -15,9 +18,9 @@ import NewNote from './features/notes/NewNote';
 import PersistLogin from './features/auth/PersistLogin';
 import RequireAuth from './features/auth/RequireAuth';
 
-import { ROLES } from './config/roles';
-
 const App = () => {
+  useTitle('Dan D. Repairs');
+
   return (
     <Routes>
       <Route path='/' element={<Layout />}>

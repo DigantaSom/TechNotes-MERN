@@ -1,11 +1,14 @@
 import PulseLoader from 'react-spinners/PulseLoader';
 
+import useTitle from '../../hooks/useTitle';
 import useAuth from '../../hooks/useAuth';
 import { useGetNotesQuery } from './notesApiSlice';
 
 import Note from './Note';
 
 const NotesList = () => {
+  useTitle('techNotes: Notes List');
+
   const { username, isManager, isAdmin } = useAuth();
 
   const {

@@ -1,11 +1,14 @@
 import { useParams } from 'react-router-dom';
 import PulseLoader from 'react-spinners/PulseLoader';
 
+import useTitle from '../../hooks/useTitle';
 import { useGetUsersQuery } from './usersApiSlice';
 
 import EditUserForm from './EditUserForm';
 
 const EditUser = () => {
+  useTitle('techNotes: Edit User');
+
   const { id } = useParams();
 
   // // subscribed user data (Prefetch.jsx)
