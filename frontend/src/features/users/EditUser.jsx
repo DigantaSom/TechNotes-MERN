@@ -9,8 +9,10 @@ const EditUser = () => {
   const { id } = useParams();
 
   // // subscribed user data (Prefetch.jsx)
+  // new request gets made, unlike the below way
   // const user = useSelector(state => selectUserById(state, id));
 
+  // no new request needs to be made, we will work with the data while fetching usersList
   const { user } = useGetUsersQuery('usersList', {
     selectFromResult: ({ data }) => ({
       user: data?.entities[id],
