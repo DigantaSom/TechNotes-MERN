@@ -17,7 +17,7 @@ const UsersList = () => {
   } = useGetUsersQuery('usersList', {
     pollingInterval: 60000, // every 60s on this page, it will requery the data
     refetchOnFocus: true, // refetch on putting focus back to browser window
-    refetchOnMountOrArgChange: true, // refetch on component mound
+    refetchOnMountOrArgChange: true, // refetch on component mount
   });
 
   // console.log('usersList:', users);
